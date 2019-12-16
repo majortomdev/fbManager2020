@@ -23,8 +23,6 @@ import com.kinadev.FbManager2020.repositories.FbRepository;
 import com.kinadev.FbManager2020.repositories.ReviewRepository;
 import com.kinadev.FbManager2020.repositories.UserRepository;
 
-import java.util.Date;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/")
@@ -37,15 +35,10 @@ public class FbController {
 	@Autowired
 	private UserRepository userRepo;
 	
-	/*
-	 * @GetMapping("/players") public List<Player> getAllPlayers() { return
-	 * (List<Player>) fbRepo.findAll(); }
-	 */
 	
 	@GetMapping("/players")
 	public ResponseEntity<Iterable<Player>>  getAllPlayers() {
 		Iterable<Player> players = fbRepo.findAll();
-		
 		return ResponseEntity.ok().body(players);
 	}
 	
@@ -73,5 +66,36 @@ public class FbController {
 		System.out.println("peek a booooooooooooo..................."+user);
 		return  ResponseEntity.ok().body(user);
 	}
+	
+//	@PostMapping("/users/{newname,newpass}")
+//	public ResponseEntity<Optional<User>> newUserSignUp(@PathVariable(value="newname") String nwname, 
+//			@PathVariable(value="newpass") String newpwd) {
+//		System.out.println("yoyyoyoooo from newusersignup");
+//		Optional<User> user = userRepo.insertNewUser(nwname, newpwd);
+//		System.out.println("we have a new entry..........."+user);
+//		return  ResponseEntity.ok().body(user);
+//	}
+	
+	@PostMapping("/users")
+	public User newUserSignUp(@RequestBody User newUser ) {
+		//User user = new User
+		//Optional<User> user = 
+		System.out.println("newUser name:  "+newUser.getUserName());
+		System.out.println("newUser id: "+newUser.getUserId());
+		 System.out.println("im here in springboots postnewuser method so i am......");
+		userRepo.save(newUser);
+		return newUser;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
